@@ -39,13 +39,14 @@ usage() {
 
   Commands:
 
-    user <name>      Create a new user
-    site <domain>    Create a new site
+    user <name>             Create a new user
+    site <domain>           Create a new site
+    remote <user>/<repo>    Syncs a repo to your home directory
 
   Options:
 
-    -v, --version    Output the version number
-    -h, --help       Output this usage message
+    -v, --version           Output the version number
+    -h, --help              Output this usage message
 
 EOF
 }
