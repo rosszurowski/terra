@@ -57,6 +57,10 @@ EOF
 
 new_user() {
 
+  if [[ $EUID -ne 0 ]]; then
+    error "root is required to create a new user"
+  fi
+
   if [ -z "$1" ]; then
     error "no username provided"
   fi
@@ -66,7 +70,6 @@ new_user() {
   id -u "$username" >/dev/null 2>&1 && error "user '$username' already exists"
   adduser "$username"
   confirm "Should this user be an admin? [y/N]" &&
-    adduser "$username" admin &&
     adduser "$username" staff &&
     adduser "$username" sudo
 
