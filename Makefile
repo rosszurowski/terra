@@ -4,7 +4,6 @@ BINARIES = $(wildcard bin/*)
 
 install: $(BINARIES)
 
-
 $(PREFIX)/bin/%: bin/%
 	@cp -f $< $@
 	@chmod +x $@

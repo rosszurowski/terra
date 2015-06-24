@@ -4,14 +4,14 @@ GRAY="\e[2m"
 RED="\033[0;31m"
 YELLOW="\033[0;33m"
 END="\033[0m"
-SRC="https://github.com/rosszurowski/server/tarball/master"
+SRC="https://github.com/rosszurowski/terra/tarball/master"
 
 # Download folder
 wget --no-check-certificate https://github.com/rosszurowski/server/tarball/master -qO - | tar -xz &&
-cd rosszurowski-server-*/ &&
+cd rosszurowski-terra-*/ &&
 
 # Install binaries
-make install &&
+cp -f bin/* /usr/local/bin/ &&
 stack provision/base &&
 
 # Close it up
