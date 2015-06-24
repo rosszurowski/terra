@@ -7,7 +7,7 @@ Makes use of [tj/stack](https://github.com/tj/stack) for provisioning.
 ## Getting Started
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/rosszurowski/server/master/bootstrap.sh | sh
+wget -qO- https://raw.githubusercontent.com/rosszurowski/terra/master/bootstrap.sh | bash
 ```
 
 ## Support
