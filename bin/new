@@ -67,6 +67,7 @@ new_user() {
   adduser "$username"
   confirm "Should this user be an admin? [y/N]" &&
     adduser "$username" admin &&
+    adduser "$username" staff &&
     adduser "$username" sudo
 
   su "$username" <<EOF
@@ -80,10 +81,10 @@ EOF
 
   local ipaddress="$(hostname -I)"
   echo -e ""
-  echo -e "    User ${YELLOW}$username${END} created"
-  echo -e "    To add SSH keys, run the following:"
+  echo -e "   User ${YELLOW}$username${END} created"
+  echo -e "   To add SSH keys, run the following:"
   echo -e ""
-  echo -e "        ${GRAY}cat ~/.ssh/id_rsa.pub | ssh $username@$ipaddress \"cat >> ~/.ssh/authorized_keys\"${END}"
+  echo -e "      ${GRAY}cat ~/.ssh/id_rsa.pub | ssh $username@$ipaddress \"cat >> ~/.ssh/authorized_keys\"${END}"
   echo -e ""
   echo -e ""
   exit
@@ -96,6 +97,8 @@ EOF
 
 new_site() {
   echo "To be implemented"
+  # If they're root, allow them to make a "root" site
+  # Otherwise, it links up with their account
 }
 
 # No args

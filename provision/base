@@ -5,9 +5,6 @@ apt-get upgrade -y -q
 apt-get install build-essential git-core curl -y -q
 apt-get install fail2ban unattended-upgrades -y -q
 
-# Enabling auto-updates for packages...
-echo -e 'APT::Periodic::Update-Package-Lists "1";\nAPT::Periodic::Download-Upgradeable-Packages "1";\nAPT::Periodic::AutocleanInterval "7";\nAPT::Periodic::Unattended-Upgrade "1";' > /etc/apt/apt.conf.d/10periodic
-
 # Disabling root login...
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 service ssh restart
