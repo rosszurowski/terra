@@ -3,8 +3,10 @@
 curl -L# https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz | tar -zx --strip 1 -C /usr/local
 
 # Setting up filesystem...
-chmod -R 775 /usr
-chown -R root:staff /usr
+chmod -R 775 /usr/{bin,local}
+chown -R root:staff /usr/{bin,local}
+chown root:root /usr/bin/sudo
+chmod 4755 /usr/bin/sudo
 
 # Installing node version manager...
 npm install -g n
