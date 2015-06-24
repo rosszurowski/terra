@@ -1,0 +1,24 @@
+
+# Installing nginx...
+apt-get install nginx -y
+
+# Adding `www` user and group...
+adduser --system --no-create-home www
+addgroup www
+adduser www www
+adduser $(whoami) www
+
+# Setting up filesystem...
+mkdir -p /srv/www
+mkdir -p /etc/nginx/logs/
+chgrp -R www /srv/www
+chmod -R g+w /srv/www
+find /srv/www -type d -exec chmod 2775 {} \;
+find /srv/www -type f -exec chmod ug+rw {} \;
+chgrp -R www /etc/nginx
+chmod -R g+w /etc/nginx
+find /etc/nginx -type d -exec chmod 2775 {} \;
+find /etc/nginx -type f -exec chmod ug+rw {} \;
+
+# Restarting nginx...
+service nginx start

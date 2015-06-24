@@ -1,0 +1,9 @@
+
+# Installing node...
+curl -L# https://nodejs.org/dist/v0.12.5/node-v0.12.5-linux-x64.tar.gz | tar -zx --strip 1 -C /usr/local
+
+# Installing node version manager...
+npm install -g n
+
+# Fetching latest iojs...
+n io latest

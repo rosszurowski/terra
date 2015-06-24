@@ -1,0 +1,8 @@
+
+source node
+
+# Installing pod...
+npm install -g pod
+
+# Configuring start-up scripts...
+echo "exec sudo -u $USER $(which node) $(which pod) startall" >> /etc/init/pod.conf

@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+#
+# Variables
+#
+VERSION="0.0.1"
+
+GRAY="\e[2m"
+RED="\033[0;31m"
+YELLOW="\033[0;33m"
+END="\033[0m"
+
+error() {
+  echo -e "${RED}ERR${END} $1"
+  exit 1
+}
+
+confirm () {
+  # call with a prompt string or use a default
+  read -r -p "${1:-Are you sure? [y/N]} " response
+  case $response in
+    [yY][eE][sS]|[yY])
+      true
+      ;;
+    *)
+      false
+      ;;
+  esac
+}
+
+#
+# Output usage info
+#
+
+usage() {
+  cat <<EOF
+
+  Usage: new [cmd] [options]
+
+  Commands:
+
+    user <name>      Create a new user
+    site <domain>    Create a new site
+
+  Options:
+
+    -v, --version    Output the version number
+    -h, --help       Output this usage message
+
+EOF
+}
+
+#
+# New user account
+#
+
+new_user() {
+
+  if [ -z "$1" ]; then
+    error "no username provided"
+  fi
+
+  local username=$1
+
+  id -u "$username" >/dev/null 2>&1 && error "user '$username' already exists"
+  adduser "$username"
+  confirm "Should this user be an admin? [y/N]" &&
+    adduser "$username" admin &&
+    adduser "$username" sudo
+
+  su "$username" <<EOF
+    # Create SSH key folder
+    mkdir ~/.ssh/ &&
+    touch ~/.ssh/authorized_keys &&
+    # Create web folders
+    mkdir ~/www/ &&
+    mkdir ~/logs/
+EOF
+
+  local ipaddress="$(hostname -I)"
+  echo -e ""
+  echo -e "    User ${YELLOW}$username${END} created"
+  echo -e "    To add SSH keys, run the following:"
+  echo -e ""
+  echo -e "        ${GRAY}cat ~/.ssh/id_rsa.pub | ssh $username@$ipaddress \"cat >> ~/.ssh/authorized_keys\"${END}"
+  echo -e ""
+  echo -e ""
+  exit
+
+}
+
+#
+# New site
+#
+
+new_site() {
+  echo "To be implemented"
+}
+
+# No args
+
+if test $# -eq 0; then
+  usage
+  exit
+fi
+
+# Parse args
+
+while test $# -ne 0; do
+  arg=$1; shift
+  case $arg in
+    -v|--version) echo $VERSION; exit ;;
+    -h|--help) usage; exit ;;
+    user) new_user "$@"; exit ;;
+    site) new_site "$@"; exit ;;
+    *) error "unknown command '$arg'"; exit ;;
+  esac
+done
