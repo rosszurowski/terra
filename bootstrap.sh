@@ -6,9 +6,7 @@ YELLOW="\033[0;33m"
 END="\033[0m"
 SRC="https://github.com/rosszurowski/server/tarball/master"
 
-# Change root password
-passwd &&
-
+# Download folder
 wget --no-check-certificate https://github.com/rosszurowski/server/tarball/master -qO - | tar -xz &&
 cd rosszurowski-server-*/ &&
 
